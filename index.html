@@ -1,226 +1,332 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>متجر الملابس - Landing Page</title>
+<title>Rilana Store</title>
 <style>
-/* ======== Reset ======== */
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: Georgia, serif; background-color:#F5F0E6; color:#7B5E57; line-height:1.5; }
-button, select, input { font-family: inherit; }
+/* تصميم أساسي */
+body {
+  margin:0;
+  font-family: Georgia, serif;
+  background-color:#F5F0E6;
+  color:#7B5E57;
+  overflow-x:hidden;
+}
 
-/* ======== Header ======== */
-header { display:flex; justify-content:space-between; align-items:center; padding:15px 20px; background: #f5f0e6; position: sticky; top:0; z-index:100; }
-.lang-select { padding:5px 10px; border-radius:5px; border:1px solid #7B5E57; }
-.header-buttons button { margin-left:10px; padding:10px 20px; border-radius:10px; background:#7B5E57; color:#F5F0E6; border:none; transition:0.3s; }
-.header-buttons button:hover { background:#5a443d; transform:scale(1.05); }
+h1,h2{ text-align:center; }
 
-/* ======== Landing ======== */
-.landing { text-align:center; padding:100px 20px; }
-.landing h1 { font-size:48px; margin-bottom:20px; }
-.landing p { font-size:22px; margin-bottom:30px; }
-.landing .landing-buttons button { margin:10px; padding:15px 30px; font-size:18px; border-radius:15px; border:none; background:#7B5E57; color:#F5F0E6; transition:0.3s; }
-.landing .landing-buttons button:hover { transform:scale(1.05); background:#5a443d; }
+header{
+  text-align:center;
+  padding:20px;
+}
 
-/* ======== Products Grid ======== */
-.products { display:grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap:20px; padding:20px; }
-.product { background:#fff5ee; border-radius:15px; padding:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); transition:0.3s; }
-.product img { width:100%; border-radius:10px; cursor:pointer; transition:0.3s; }
-.product:hover { transform:scale(1.02); }
-.product h2 { margin:10px 0; font-size:22px; }
-.product .price { font-weight:bold; margin-bottom:10px; font-size:18px; }
+.language-select{
+  text-align:center;
+  margin-bottom:10px;
+}
 
-/* ======== Details Section ======== */
-.details { display:none; margin-top:10px; padding-top:10px; border-top:1px solid #ddd; }
-.details label { display:block; margin:5px 0 3px; font-weight:bold; }
-.details input[type="text"], .details select { padding:5px; width:100%; border-radius:5px; border:1px solid #7B5E57; margin-bottom:10px; }
-.color-options { display:flex; gap:10px; margin-bottom:10px; }
-.color-btn { width:30px; height:30px; border-radius:50%; border:2px solid #7B5E57; cursor:pointer; transition:0.3s; }
-.color-btn:hover { transform:scale(1.1); }
-.quantity { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
-.quantity button { padding:5px 10px; border:none; background:#7B5E57; color:#F5F0E6; border-radius:5px; transition:0.3s; }
-.quantity button:hover { background:#5a443d; }
-.add-cart { width:100%; background:#7B5E57; color:#F5F0E6; border:none; padding:10px; border-radius:10px; font-size:16px; transition:0.3s; }
-.add-cart:hover { background:#5a443d; transform:scale(1.05); }
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  padding:20px;
+}
 
-/* ======== Cart Sidebar ======== */
-.cart-icon { position:fixed; bottom:20px; right:20px; background:#00a86b; color:#fff; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.3); z-index:1000; }
-.cart-sidebar { position:fixed; right:-400px; top:0; width:400px; height:100%; background:#F5F0E6; box-shadow:-5px 0 15px rgba(0,0,0,0.2); transition:0.5s; padding:20px; overflow-y:auto; z-index:999; }
-.cart-sidebar.active { right:0; }
-.cart-sidebar h2 { margin-bottom:20px; font-size:24px; }
-.cart-item { border-bottom:1px solid #ddd; padding:10px 0; }
-.cart-item p { margin:3px 0; }
-.total { font-weight:bold; margin-top:15px; font-size:18px; }
+.product{
+  background:#fff;
+  border-radius:12px;
+  padding:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-/* ======== Animations ======== */
-@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+.product:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
 
-/* ======== Responsive ======== */
-@media(max-width:768px){ .cart-sidebar{width:80%;} }
+.product img{
+  width:100%;
+  border-radius:10px;
+  transition:opacity 0.5s ease;
+}
+
+.colors span{
+  display:inline-block;
+  width:25px;height:25px;
+  border-radius:50%;
+  margin:5px;
+  cursor:pointer;
+  border:2px solid #7B5E57;
+  transition:transform 0.3s ease;
+}
+
+.colors span:hover{ transform:scale(1.2); }
+
+select,input{
+  width:100%;
+  padding:6px;
+  margin:5px 0;
+  border-radius:5px;
+  border:1px solid #ccc;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#7B5E57;
+  color:#fff;
+  cursor:pointer;
+  margin-top:5px;
+  transition:background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover{
+  background:#5a453f;
+  transform:scale(1.05);
+}
+
+/* سلة */
+.cart-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#00a86b;
+  color:#fff;
+  font-size:24px;
+  padding:15px;
+  border-radius:50%;
+  cursor:pointer;
+  z-index:1000;
+}
+
+.cart{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:350px;
+  height:100%;
+  background:#fff;
+  box-shadow:-4px 0 12px rgba(0,0,0,0.2);
+  padding:20px;
+  overflow:auto;
+  transition:0.3s;
+  z-index:999;
+}
+
+.cart.active{ right:0; }
+
+.cart h3{text-align:center;margin-bottom:10px;}
 </style>
 </head>
+
 <body>
+
 <header>
-  <select class="lang-select" id="language">
-    <option value="ar">العربية</option>
-    <option value="fr">Français</option>
-    <option value="en">English</option>
-  </select>
-  <div class="header-buttons">
-    <button id="shopBtn">Shop Now / تسوق الآن</button>
-    <button onclick="window.open('https://www.instagram.com/rilana__collection?igsh=c3kycmxrczl4M3Zt','_blank')">Visit Instagram / زوروا إنستغرام</button>
+  <h1>Rilana Store</h1>
+  <div class="language-select">
+    <label for="lang">اختار اللغة / Choisir la langue / Choose Language: </label>
+    <select id="lang">
+      <option value="ar">العربية</option>
+      <option value="fr" selected>Français</option>
+      <option value="en">English</option>
+    </select>
   </div>
+  <button onclick="scrollToProducts()">Shop Now / تسوق الآن</button>
+  <button onclick="window.open('https://www.instagram.com/rilana__collection?igsh=c3kycmxrczl4M3Zt','_blank')">Visit Our Instagram</button>
 </header>
 
-<section class="landing">
-  <h1>Welcome to our Store / مرحباً بكم في متجرنا</h1>
-  <p>Click below to visit our Instagram / اضغط أدناه لزيارة الإنستغرام</p>
-  <div class="landing-buttons">
-    <button id="landingShopBtn">Shop Now / تسوق الآن</button>
-    <button onclick="window.open('https://www.instagram.com/rilana__collection?igsh=c3kycmxrczl4M3Zt','_blank')">Visit Instagram / زوروا إنستغرام</button>
-  </div>
-</section>
+<div class="products" id="products"></div>
 
-<section class="products" id="products">
+<div class="cart-btn" onclick="toggleCart()">🛍️</div>
 
-<!-- ====== Yaqout Dress ====== -->
-<div class="product" data-name="Yaqout Dress" data-price="3700">
-  <img src="https://i.ibb.co/1GVHY6LL" alt="Yaqout Dress" class="product-img">
-  <h2>Yaqout Dress</h2>
-  <p class="price">3700 DZD</p>
-  <div class="details">
-    <label>Color / اللون / Couleur:</label>
-    <div class="color-options">
-      <div class="color-btn" style="background:#d3d3d3;" data-src="https://i.ibb.co/1GVHY6LL"></div>
-      <div class="color-btn" style="background:#800020;" data-src="https://i.ibb.co/jkTwFDvr"></div>
-      <div class="color-btn" style="background:#008000;" data-src="https://i.ibb.co/Hp75Bxhr"></div>
-      <div class="color-btn" style="background:#0000ff;" data-src="https://i.ibb.co/PsPKcQRc"></div>
-    </div>
-    <label>Size / المقاس / Taille:</label>
-    <select class="size-select">
-      <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
-    </select>
-    <label>Height / الطول / Taille:</label>
-    <input type="text" class="height-input" placeholder="1.50 - 1.75">
-    <label>Quantity / الكمية / Quantité:</label>
-    <div class="quantity">
-      <button class="minus">-</button>
-      <input type="text" value="1" class="qty" style="width:40px;text-align:center;">
-      <button class="plus">+</button>
-    </div>
-    <label>Name / الاسم / Nom:</label>
-    <input type="text" class="fullname">
-    <label>Phone / رقم الهاتف / Téléphone:</label>
-    <input type="text" class="phone">
-    <label>Wilaya / الولاية / Wilaya:</label>
-    <select class="wilaya-select">
-      <option value="">Select / اختر / Sélectionner</option>
-      <option value="Adrar">أدرار</option>
-      <option value="Chlef">الشلف</option>
-      <option value="Laghouat">الأغواط</option>
-      <option value="Oum El Bouaghi">أم البواقي</option>
-      <option value="Batna">باتنة</option>
-      <option value="Béjaïa">بجاية</option>
-      <option value="Biskra">بسكرة</option>
-      <option value="Béchar">بشار</option>
-      <option value="Blida">البليدة</option>
-      <option value="Bouira">البويرة</option>
-      <!-- أضف باقي الولايات حسب القائمة التي أرسلتها -->
-    </select>
-    <button class="add-cart">Add to Cart / أضف إلى السلة / Ajouter au panier</button>
-  </div>
-</div>
+<div class="cart" id="cart">
+<h3>السلة</h3>
+<div id="cartItems"></div>
+<p id="total"></p>
 
-<!-- ====== يمكنك تكرار هذا الهيكل لبقية المنتجات الأربعة مع الصور المناسبة لكل لون ====== -->
+<select id="wilaya">
+  <option value="0">اختر الولاية</option>
+  <option value="1100">أدرار</option>
+  <option value="700">الشلف</option>
+  <option value="900">الأغواط</option>
+  <option value="800">أم البواقي</option>
+  <option value="900">باتنة</option>
+  <option value="600">بجاية</option>
+  <option value="900">بسكرة</option>
+  <option value="1300">بشار</option>
+  <option value="500">البليدة</option>
+  <option value="600">البويرة</option>
+  <option value="1300">تمنراست</option>
+  <option value="900">تبسة</option>
+  <option value="800">تلمسان</option>
+  <option value="700">تيارت</option>
+  <option value="600">تيزي وزو</option>
+  <option value="500">الجزائر العاصمة</option>
+  <option value="900">الجلفة</option>
+  <option value="700">جيجل</option>
+  <option value="700">سطيف</option>
+  <option value="800">سعيدة</option>
+  <option value="700">سكيكدة</option>
+  <option value="700">سيدي بلعباس</option>
+  <option value="700">عنابة</option>
+  <option value="800">قالمة</option>
+  <option value="700">قسنطينة</option>
+  <option value="600">المدية</option>
+<option value="700">مستغانم</option>
+  <option value="800">المسيلة</option>
+  <option value="700">معسكر</option>
+  <option value="1000">ورقلة</option>
+  <option value="700">وهران</option>
+  <option value="1000">البيض</option>
+  <option value="1300">إيليزي</option>
+  <option value="700">برج بوعريريج</option>
+  <option value="450">بومرداس</option>
+  <option value="800">الطارف</option>
+  <option value="1300">تندوف</option>
+  <option value="700">تسمسيلت</option>
+  <option value="1000">الوادي</option>
+  <option value="900">خنشلة</option>
+  <option value="900">سوق أهراس</option>
+  <option value="700">تيبازة</option>
+  <option value="700">ميلة</option>
+  <option value="700">عين الدفلى</option>
+  <option value="1000">النعامة</option>
+  <option value="700">عين تموشنت</option>
+  <option value="1000">غرداية</option>
+  <option value="700">غليزان</option>
+  <option value="1300">تيميمون</option>
+  <option value="900">أولاد جلال</option>
+  <option value="1300">بني عباس</option>
+  <option value="1300">عين صالح</option>
+  <option value="900">توقرت</option>
+  <option value="900">المغير</option>
+  <option value="1000">المنيعة</option>
+</select>
 
-</section>
+<select id="deliveryType">
+<option value="0">نوع التوصيل</option>
+<option value="0">مكتب</option>
+<option value="300">منزل (+300دج)</option>
+</select>
 
-<div class="cart-icon" id="cartIcon">🛒</div>
-<div class="cart-sidebar" id="cartSidebar">
-  <h2>Shopping Cart / سلة المشتريات / Panier</h2>
-  <div id="cartItems"></div>
-  <p class="total" id="cartTotal">Total Price / السعر الإجمالي / Prix total: 0 DZD</p>
+<button onclick="sendOrder()">تأكيد الطلب</button>
 </div>
 
 <script>
-const products = document.querySelectorAll('.product');
-const cartIcon = document.getElementById('cartIcon');
-const cartSidebar = document.getElementById('cartSidebar');
-const cartItemsContainer = document.getElementById('cartItems');
-const cartTotal = document.getElementById('cartTotal');
-let cart = [];
+let langSelect = document.getElementById("lang");
+let currentLang = langSelect.value;
+langSelect.addEventListener("change",()=>{currentLang=langSelect.value;});
 
-// Delivery prices (أدرج جميع الولايات التي أرسلتها)
-const deliveryPrices = {
-  "Adrar":1100,"Chlef":700,"Laghouat":900,"Oum El Bouaghi":800,"Batna":900,"Béjaïa":600,
-  "Biskra":900,"Béchar":1300,"Blida":500,"Bouira":600
-};
-// Toggle details
-products.forEach(p=>{
-  const img = p.querySelector('.product-img');
-  const details = p.querySelector('.details');
-  img.addEventListener('click',()=>{ details.style.display = details.style.display==='block'?'none':'block'; });
+let products=[
+{
+name:"Yaqout Dress",price:3700,
+colors:[
+{name:"Bordeaux",c:"#800020",img:"https://i.ibb.co/jkTwFDvr"},
+{name:"Green",c:"green",img:"https://i.ibb.co/Hp75Bxhr"},
+{name:"Blue",c:"blue",img:"https://i.ibb.co/PsPKcQRc"}
+]
+},
+{
+name:"Sultana Dress",price:4000,
+colors:[
+{name:"White",c:"white",img:"https://i.ibb.co/XZnkpywh"}
+]
+},
+{
+name:"Comfort Fit",price:3900,
+colors:[
+{name:"Brown",c:"brown",img:"https://i.ibb.co/BFd2hbr"},
+{name:"Black",c:"black",img:"https://i.ibb.co/8g09tL7t"},
+{name:"Dark Gray",c:"gray",img:"https://i.ibb.co/DfPp0VdZ"}
+]
+},
+{
+name:"Aurora Top",price:3100,
+colors:[
+{name:"Bordeaux",c:"#800020",img:"https://i.ibb.co/RGgq1GTS"},
+{name:"White",c:"white",img:"https://i.ibb.co/cc1Mnbzw"},
+{name:"Brown",c:"brown",img:"https://i.ibb.co/YByFCt4t"}
+]
+},
+{
+name:"Bella Top",price:3000,
+colors:[
+{name:"Brown",c:"brown",img:"https://i.ibb.co/DP4fxQbh"},
+{name:"Beige",c:"beige",img:"https://i.ibb.co/Xk5K3zm7"},
+{name:"Black",c:"black",img:"https://i.ibb.co/NG8YF6Z"},
+{name:"White",c:"white",img:"https://i.ibb.co/x8CDd3dY"},
+{name:"Bordeaux",c:"#800020",img:"https://i.ibb.co/XgCqdk0"}
+]
+}
+];
 
-  // Quantity buttons
-  const minus = details.querySelector('.minus');
-  const plus = details.querySelector('.plus');
-  const qtyInput = details.querySelector('.qty');
-  minus.addEventListener('click',()=>{ if(parseInt(qtyInput.value)>1) qtyInput.value=parseInt(qtyInput.value)-1; });
-  plus.addEventListener('click',()=>{ if(parseInt(qtyInput.value)<10) qtyInput.value=parseInt(qtyInput.value)+1; });
+let cart=[];
+let selectedColors={};
 
-  // Color buttons
-  const colorBtns = details.querySelectorAll('.color-btn');
-  colorBtns.forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      img.src = btn.dataset.src;
-    });
-  });
-
-  // Add to cart
-  const addBtn = details.querySelector('.add-cart');
-  addBtn.addEventListener('click',()=>{
-    const name = p.dataset.name;
-    const price = parseInt(p.dataset.price);
-    const color = details.querySelector('.color-btn')?.dataset.src || 'default';
-    const size = details.querySelector('.size-select').value;
-    const height = details.querySelector('.height-input').value;
-    const quantity = parseInt(details.querySelector('.qty').value);
-    const fullname = details.querySelector('.fullname').value;
-    const phone = details.querySelector('.phone').value;
-    const wilaya = details.querySelector('.wilaya-select').value;
-    const delivery = deliveryPrices[wilaya] || 0;
-    cart.push({name, price, color, size, height, quantity, fullname, phone, wilaya, delivery});
-    updateCart();
-  });
+function renderProducts(){
+let html="";
+products.forEach((p,i)=>{
+html+=<div class="product">
+<img id="img${i}" src="${p.colors[0].img}">
+<h3>${p.name}</h3>
+<p>${p.price} DA</p>
+<div class="colors">
+${p.colors.map(c=><span style="background:${c.c}" onclick="changeColor(${i},'${c.img}','${c.name}')"></span>).join("")}
+</div>
+<select id="size${i}">
+<option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+</select>
+<input id="height${i}" placeholder="1.50 - 1.75">
+<input id="qty${i}" type="number" value="1" min="1" max="10">
+<button onclick="addToCart(${i})">Ajouter</button>
+</div>;
 });
-
-// Update cart
-function updateCart(){
-  cartItemsContainer.innerHTML='';
-  let total=0;
-  cart.forEach(item=>{
-    total+=item.price*item.quantity;
-    const div=document.createElement('div');
-    div.classList.add('cart-item');
-    div.innerHTML=<p><strong>${item.name}</strong></p>
-      <p>Color: ${item.color}</p>
-      <p>Size: ${item.size}</p>
-      <p>Height: ${item.height}</p>
-      <p>Quantity: ${item.quantity}</p>
-      <p>Price: ${item.price} DZD</p>;
-    cartItemsContainer.appendChild(div);
-  });
-  const deliveryPrice = cart[0]?.delivery || 0;
-  cartTotal.textContent=Total Price / السعر الإجمالي / Prix total: ${total+deliveryPrice} DZD (Delivery: ${deliveryPrice} DZD);
+document.getElementById("products").innerHTML=html;
 }
 
-// Toggle cart sidebar
-cartIcon.addEventListener('click',()=>{ cartSidebar.classList.toggle('active'); });
+function changeColor(i,img,name){document.getElementById("img"+i).src=img; selectedColors[i]=name;}
 
-// Scroll to products on landing button
-document.getElementById('shopBtn').addEventListener('click',()=>{ document.getElementById('products').scrollIntoView({behavior:'smooth'}); });
-document.getElementById('landingShopBtn').addEventListener('click',()=>{ document.getElementById('products').scrollIntoView({behavior:'smooth'}); });
+function addToCart(i){
+let p=products[i];
+let qty=parseInt(document.getElementById("qty"+i).value);
+let size=document.getElementById("size"+i).value;
+let height=document.getElementById("height"+i).value;
+cart.push({name:p.name,price:p.price,qty:qty,size:size,height:height,color:selectedColors[i]||p.colors[0].name});
+renderCart();
+}
+function renderCart(){
+let html="";
+let total=0;
+cart.forEach(item=>{
+total+=item.price*item.qty;
+html+=<p>${item.name} x${item.qty}<br>${item.color} / ${item.size} / ${item.height}</p>;
+});
+document.getElementById("cartItems").innerHTML=html;
+document.getElementById("total").innerText="المجموع: "+total+" دج";
+}
+
+function toggleCart(){document.getElementById("cart").classList.toggle("active");}
+
+function sendOrder(){
+let wilaya=parseInt(document.getElementById("wilaya").value);
+let delivery=parseInt(document.getElementById("deliveryType").value);
+let total=0;
+let message="طلب جديد:\n\n";
+cart.forEach(item=>{total+=item.price*item.qty; message+=${item.name} x${item.qty}\n${item.color} / ${item.size} / ${item.height}\n\n;});
+message+=المجموع: ${total} دج\n;
+message+=التوصيل: ${wilaya+delivery} دج\n;
+message+=الإجمالي: ${total+wilaya+delivery} دج;
+window.open("https://wa.me/213794042520?text="+encodeURIComponent(message),"_blank");
+}
+
+function scrollToProducts(){document.getElementById("products").scrollIntoView({behavior:"smooth"});}
+
+renderProducts();
 </script>
+
 </body>
 </html>
