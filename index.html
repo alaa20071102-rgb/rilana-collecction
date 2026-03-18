@@ -3,147 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rilana Collection</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>Rilana Collection | المتجر الرسمي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --main: #7B5E57; --bg: #F5F0E6; }
-        body { margin: 0; font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--main); }
-        header { text-align: center; padding: 40px 20px; background: #fff; border-bottom: 2px solid var(--main); }
-        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; padding: 20px; }
-        .product { background: #fff; border-radius: 15px; padding: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; }
-        /* جعل الصورة واضحة وكبيرة */
-        .product img { width: 100%; height: auto; border-radius: 10px; cursor: pointer; transition: 0.3s; }
-        .product img:hover { transform: scale(1.02); }
-        .price { font-size: 1.5rem; font-weight: bold; margin: 10px 0; color: #A67C52; }
-        .colors { margin: 10px 0; }
-        .colors span { display: inline-block; width: 25px; height: 25px; border-radius: 50%; margin: 5px; cursor: pointer; border: 2px solid #ddd; }
-        select, input { width: 100%; padding: 10px; margin: 5px 0; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
-        .btn { background: var(--main); color: #fff; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        
-        /* السلة */
-        .cart-toggle { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 15px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 100; }
-        .cart-panel { position: fixed; top: 0; left: -100%; width: 320px; height: 100%; background: #fff; z-index: 200; transition: 0.4s; padding: 20px; box-shadow: 5px 0 15px rgba(0,0,0,0.2); overflow-y: auto; }
-        .cart-panel.active { left: 0; }
+        :root {
+            --primary: #7B5E57; /* لون المارون الداكن للعلامة */
+            --accent: #A67C52;  /* لون ذهبي فاتح للعناوين */
+            --bg: #FAF9F6;      /* لون خلفية بيج فاتح ومريح */
+            --white: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Cairo', sans-serif; /* خط الكهيرو المريح للقراءة */
+            background-color: var(--bg);
+            color: var(--primary);
+            overflow-x: hidden;
+            padding-bottom: 80px; /* مساحة لزر السلة */
+        }
+
+        /* 2. تصميم الواجهة الاحترافي والجذاب */
+        header {
+            background: var(--white);
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif; /* خط كلاسيكي فخم للاسم */
+            font-size: 3.5rem;
+            margin: 0;
+            letter-spacing: 3px;
+            color: var(--primary);
+        }
+
+        header p { font-size: 1.1rem; color: #888; margin-top: 10px; }
+
+        .shop-btn {
+            background: var(--primary);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(123, 94, 87, 0.2);
+        }
+
+        .shop-btn:hover { background: var(--accent); transform: translateY(-2px); }
+
+        /* 4. المنتجات والصور بجودة عالية والوان مناسبة */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .product {
+            background: var(--white);
+            border: 1px solid #f3f3f3;
+            padding: 0;
+            overflow: hidden;
+            transition: 0.4s ease;
+            position: relative;
+        }
+
+        .product:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.03); }
+
+        .product img {
+            width: 100%;
+            height: 480px; /* زيادة حجم الصورة لتكون باينة */
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+        }
+
+        .product-info { padding: 25px; text-align: center; }
+
+        .product-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 0 0 10px 0; }
+
+        .product-price { font-size: 1.5rem; color: var(--accent); font-weight: bold; margin-bottom: 20px; }
+
+        .colors { margin: 15px 0 20px 0; display: flex; justify-content: center; gap: 10px; }
+        .colors span {
+            display: inline-block;
+            width: 25px; height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #eee;
+            transition: 0.2s;
+        }
+        .colors span.active { border-color: var(--accent); transform: scale(1.1); }
+
+        select, input {
+            width: 90%;
+            padding: 12px;
+            margin: 6px 0;
+            border: 1px solid #eaeaea;
+            background: #fbfbfb;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 16px;
+            background: #222;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        .add-btn:hover { background: var(--primary); }
+
+        /* Floating Cart Icon */
+        .cart-trigger {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--primary);
+            color: white;
+            width: 65px; height: 65px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 26px; cursor: pointer;
+            z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: 0.3s ease;
+        }
+        .cart-trigger:hover { background: var(--accent); }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0; left: -100%;
+            width: 380px; height: 100%;
+            background: white;
+            z-index: 2000;
+            box-shadow: 5px 0 20px rgba(0,0,0,0.08);
+            transition: 0.4s ease;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.active { left: 0; }
+
+        .cart-header { padding: 30px; border-bottom: 1px solid #eee; position: sticky; top: 0; background: white; z-index: 10; }
+        .cart-title { font-size: 1.5rem; margin: 0; }
+        .close-cart { color: #aaa; cursor: pointer; float: left; font-size: 1.2rem; }
+        .close-cart:hover { color: red; }
+
+        .cart-body { padding: 30px; }
+        .cart-item { border-bottom: 1px solid #f5f5f5; padding: 15px 0; font-size: 0.9rem; }
+        .cart-item b { color: var(--accent); }
+
+        #total { font-weight: bold; font-size: 1.4rem; color: var(--primary); margin: 25px 0; text-align: center; }
+
+        .cart-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        .cart-btn:hover { background: var(--primary); }
+
     </style>
 </head>
 <body>
 
 <header>
     <h1>Rilana Collection</h1>
-    <p>أزياء راقية لكل المناسبات</p>
+    <p>أزياء جزائرية راقية بلمسة عصرية</p>
+    <button class="shop-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اكتشفي المجموعة</button>
 </header>
 
-<div class="products" id="productList"></div>
+<div class="products" id="products"></div>
 
-<div class="cart-toggle" onclick="toggleCart()">🛍️</div>
+<div class="cart-trigger" onclick="toggleCart()">🛒</div>
 
-<div class="cart-panel" id="cartPanel">
-    <button onclick="toggleCart()" style="color:red; background:none; border:none; cursor:pointer;">إغلاق X</button>
-    <h3>طلباتك</h3>
-    <div id="cartItems"></div>
-    <hr>
-    <p id="totalPrice" style="font-weight:bold;"></p>
+<div class="cart-sidebar" id="cart">
+    <div class="cart-header">
+        <span class="close-cart" onclick="toggleCart()">إغلاق X</span>
+        <h3 class="cart-title">حقيبة التسوق الخاصة بكِ</h3>
+    </div>
     
-    <label>اختر الولاية:</label>
-    <select id="wilaya">
-        <option value="450">بومرداس (450 دج)</option>
-        <option value="500">الجزائر (500 دج)</option>
-        <option value="600">البويرة / تيزي وزو (600 دج)</option>
-        <option value="700">سطيف / وهران / قسنطينة (700 دج)</option>
-        <option value="900">باتنة / بسكرة (900 دج)</option>
-    </select>
-    
-    <button class="btn" onclick="sendOrder()">إرسال الطلب عبر واتساب</button>
+    <div class="cart-body">
+        <div id="cartItems"></div>
+        <p id="total">المجموع: 0 DA</p>
+        
+        <h4 style="margin-top:30px">معلومات الشحن والتوصيل</h4>
+        <input type="text" id="custName" placeholder="الاسم واللقب الكامليْن">
+        <input type="tel" id="custPhone" placeholder="رقم الهاتف">
+        
+        <label>الولاية:</label>
+        <select id="wilaya" onchange="updateDeliveryOptions()">
+            <option value="" disabled selected>اختر الولاية</option>
+            <option value="Adrar" data-desk="600" data-home="1100">أدرار</option>
+            <option value="Chlef" data-desk="400" data-home="700">الشلف</option>
+            <option value="Laghouat" data-desk="500" data-home="900">الأغواط</option>
+            <option value="Alger" data-desk="350" data-home="500">الجزائر العاصمة</option>
+            <option value="Boumerdes" data-desk="250" data-home="450">بومرداس</option>
+            </select>
+        
+        <label>نوع التوصيل:</label>
+        <select id="deliveryMethod">
+            <option value="" disabled selected>اختر نوع التوصيل أولاً</option>
+        </select>
+        
+        <input type="text" id="custMuni" placeholder="البليدية">
+        <input type="text" id="custAddr" placeholder="العنوان الدقيق / اسم المكتب">
+
+        <button class="cart-btn" style="background:#833AB4;" onclick="sendOrder()">تأكيد الطلب عبر انستغرام</button>
+    </div>
 </div>
 
 <script>
-const products = [
-    { name: "Yaqout Dress", price: 3700, colors: [
-        { name: "خمار مارون", hex: "#800020", img: "https://i.ibb.co/jkTwFDvr/8243.jpg" },
-        { name: "أخضر", hex: "green", img: "https://i.ibb.co/Hp75Bxhr/8244.jpg" },
-        { name: "أزرق", hex: "blue", img: "https://i.ibb.co/PsPKcQRc/8245.jpg" }
-    ]},
-    { name: "Sultana Dress", price: 4000, colors: [
-        { name: "أبيض", hex: "#fff", img: "https://i.ibb.co/XZnkpywh/8247.jpg" }
-    ]},
-    { name: "Comfort Fit", price: 3900, colors: [
-        { name: "بني", hex: "brown", img: "https://i.ibb.co/BFd2hbr/8241.jpg" },
-        { name: "أسود", hex: "black", img: "https://i.ibb.co/8g09tL7t/8242.jpg" }
-    ]},
-    { name: "Aurora Top", price: 3100, colors: [
-        { name: "مارون", hex: "#800020", img: "https://i.ibb.co/RGgq1GTS/8246.jpg" },
-        { name: "أبيض", hex: "#fff", img: "https://i.ibb.co/cc1Mnbzw/8248.jpg" }
-    ]},
-    { name: "Bella Top", price: 3000, colors: [
-        { name: "بيج", hex: "#F5F5DC", img: "https://i.ibb.co/Xk5K3zm7/8249.jpg" },
-        { name: "أسود", hex: "black", img: "https://i.ibb.co/NG8YF6Z/8250.jpg" }
-    ]}
-];
+    // 4. المنتجات والصور بجودة عالية والوان مناسبة
+    let products = [
+        {
+            name: "Yaqout Dress", price: 3700,
+            colors: [
+                {name: "مارون", hex: "#800020", img: "https://i.ibb.co/jkTwFDvr/8243.jpg"},
+                {name: "أخضر", hex: "green", img: "https://i.ibb.co/Hp75Bxhr/8244.jpg"},
+                {name: "أزرق", hex: "blue", img: "https://i.ibb.co/PsPKcQRc/8245.jpg"}
+            ]
+        },
+        {
+            name: "Sultana Dress", price: 4000,
+            colors: [{name: "أبيض", hex: "#fcfcfc", img: "https://i.ibb.co/XZnkpywh/8247.jpg"}]
+        }
+    ];
 
-let cart = [];
-let selectedVariants = {};
+    let cart = [];
+    let selectedColors = {};
 
-function init() {
-    let html = "";
-    products.forEach((p, i) => {
-        selectedVariants[i] = p.colors[0];
-        html += `
-        <div class="product">
-            <img id="img${i}" src="${p.colors[0].img}" onclick="window.open(this.src)">
-            <h3>${p.name}</h3>
-            <div class="price">${p.price} DA</div>
-            <div class="colors">
-                ${p.colors.map(c => `<span style="background:${c.hex}" onclick="updateVariant(${i}, '${c.img}', '${c.name}')"></span>`).join("")}
-            </div>
-            <select id="size${i}"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-            <input type="text" id="h${i}" placeholder="الطول (مثال 1.60)">
-            <button class="btn" onclick="addToCart(${i})">إضافة للسلة</button>
-        </div>`;
-    });
-    document.getElementById("productList").innerHTML = html;
-}
+    function renderProducts() {
+        let html = "";
+        products.forEach((p, i) => {
+            html += `
+            <div class="product">
+                <img id="img${i}" src="${p.colors[0].img}" onclick="window.open(this.src)">
+                <div class="product-info">
+                    <h3 class="product-title">${p.name}</h3>
+                    <div class="product-price">${p.price} DA</div>
+                    <div class="colors">
+                        ${p.colors.map((c, ci) => `<span class="${ci===0?'active':''}" style="background:${c.hex}" onclick="changeColor(this, ${i}, '${c.img}', '${c.name}')"></span>`).join("")}
+                    </div>
+                    <select id="size${i}">
+                        <option>المقاس: S</option><option>M</option><option>L</option><option>XL</option>
+                    </select>
+                    <input id="height${i}" placeholder="الطول (مثال: 1.65)">
+                    <button class="add-btn" onclick="addToCart(${i})">إضافة للحقيبة</button>
+                </div>
+            </div>`;
+        });
+        document.getElementById("products").innerHTML = html;
+    }
 
-function updateVariant(i, img, name) {
-    document.getElementById("img" + i).src = img;
-    selectedVariants[i] = { name: name, img: img };
-}
+    function changeColor(el, i, img, name) {
+        document.getElementById("img" + i).src = img;
+        selectedColors[i] = name;
+        
+        let parent = el.parentElement;
+        parent.querySelectorAll('span').forEach(s => s.classList.remove('active'));
+        el.classList.add('active');
+    }
 
-function addToCart(i) {
-    let size = document.getElementById("size" + i).value;
-    let height = document.getElementById("h" + i).value;
-    if(!height) return alert("يرجى كتابة الطول");
-    
-    cart.push({ ...products[i], color: selectedVariants[i].name, size, height });
-    alert("تمت الإضافة!");
-    renderCart();
-}
+    function addToCart(i) {
+        let p = products[i];
+        let size = document.getElementById("size" + i).value;
+        let height = document.getElementById("height" + i).value;
+        if(!height) { alert("يرجى إدخال الطول"); return; }
+        
+        cart.push({
+            name: p.name, 
+            price: p.price, 
+            size: size, 
+            height: height, 
+            color: selectedColors[i] || p.colors[0].name
+        });
+        alert("تمت الإضافة بنجاح! تفكدي الحقيبة ✨");
+        renderCart();
+    }
 
-function renderCart() {
-    let html = ""; let total = 0;
-    cart.forEach(item => {
-        total += item.price;
-        html += `<p style="font-size:0.9rem;">- ${item.name} (${item.color}) / ${item.size} / ${item.height}m</p>`;
-    });
-    document.getElementById("cartItems").innerHTML = html;
-    document.getElementById("totalPrice").innerText = "المجموع: " + total + " DA";
-}
+    function renderCart() {
+        let html = "";
+        let total = 0;
+        cart.forEach((item, index) => {
+            total += item.price;
+            html += `<div class="cart-item">
+                        <b>${item.name}</b> (${item.color}) - المقاس: ${item.size} - ${item.height}m<br>
+                        السعر: ${item.price} DA
+                     </div>`;
+        });
+        document.getElementById("cartItems").innerHTML = html;
+        document.getElementById("total").innerText = "المجموع الأساسي: " + total + " DA";
+    }
 
-function toggleCart() { document.getElementById("cartPanel").classList.toggle("active"); }
+    function toggleCart() { document.getElementById("cart").classList.toggle("active"); }
 
-function sendOrder() {
-    if(cart.length === 0) return alert("السلة فارغة");
-    let delivery = parseInt(document.getElementById("wilaya").value);
-    let total = 0;
-    let text = "طلب جديد من Rilana Store:%0A%0A";
-    cart.forEach(item => {
-        total += item.price;
-        text += `• ${item.name} (${item.color})%0A  المقاس: ${item.size} | الطول: ${item.height}%0A%0A`;
-    });
-    text += `الإجمالي مع التوصيل: ${total + delivery} DA`;
-    window.open(`https://wa.me/213794042520?text=${text}`);
-}
+    function updateDeliveryOptions() {
+        let wilaya = document.getElementById("wilaya");
+        let selectedOption = wilaya.options[wilaya.selectedIndex];
+        let deliveryMethod = document.getElementById("deliveryMethod");
+        
+        let deskPrice = selectedOption.getAttribute('data-desk');
+        let homePrice = selectedOption.getAttribute('data-home');
+        
+        deliveryMethod.innerHTML = '<option value="" disabled selected>اختر نوع التوصيل</option>';
+        if(deskPrice) deliveryMethod.innerHTML += `<option value="${deskPrice}">إلى المكتب (${deskPrice} دج)</option>`;
+        if(homePrice) deliveryMethod.innerHTML += `<option value="${homePrice}">إلى المنزل (${homePrice} دج)</option>`;
+    }
 
-init();
+    function sendOrder() {
+        // 3. عمليات حساب مصححة ومركزة عليها
+        if(cart.length === 0) { alert("الحقيبة فارغة"); return; }
+        
+        let name = document.getElementById("custName").value;
+        let phone = document.getElementById("custPhone").value;
+        let wilaya = document.getElementById("wilaya").value;
+        let methodPrice = parseInt(document.getElementById("deliveryMethod").value);
+        let muni = document.getElementById("custMuni").value;
+        let addr = document.getElementById("custAddr").value;
+
+        if(!name || !phone || !wilaya || isNaN(methodPrice) || !muni || !addr) { alert("يرجى ملء جميع معلومات التوصيل"); return; }
+
+        let cartTotal = 0;
+        let details = "طلب جديد من Rilana Store:%0A%0A";
+        details += `الاسم واللقب: ${name}%0Aالهاتف: ${phone}%0Aالولاية: ${wilaya}%0Aالبلدية: ${muni}%0Aالعنوان: ${addr}%0A%0A`;
+        
+        cart.forEach(item => {
+            cartTotal += item.price;
+            details += `- ${item.name} (${item.color} / ${item.size} / ${item.height}m)%0A`;
+        });
+        
+        details += `%0Aالمجموع الأساسي: ${cartTotal} DA`;
+        details += `%0Aسعر التوصيل: ${methodPrice} DA`;
+        details += `%0Aالإجمالي مع التوصيل: ${cartTotal + methodPrice} DA`; // حساب إجمالي دقيق
+
+        // 5. الطلب يذهب كرسالة انستغرام
+        let instaLink = `https://www.instagram.com/rilana__collection?igsh=MWdhbDU4bnQ2bTdhaw==?text=${details}`;
+        window.open(instaLink, '_blank');
+    }
+
+    renderProducts();
 </script>
 </body>
 </html>
