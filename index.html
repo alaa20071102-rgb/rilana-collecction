@@ -1,1 +1,162 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landing Page</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Georgia, serif;
+    background-color: #F5F0E6;
+    color: #7B5E57;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    text-align: center;
+    scroll-behavior: smooth;
+    transition: direction 0.3s;
+  }
+  h1 {
+    font-size: 3em;
+    margin: 0.5em 0;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+  }
+  p {
+    font-size: 1.5em;
+    margin: 0.5em 0 2em;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 0.5s;
+  }
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 1s;
+  }
+  .btn {
+    font-size: 1.5em;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: #7B5E57;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s, background-color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .btn:hover {
+    transform: scale(1.05);
+    background-color: #5a463f;
+  }
+  .lang-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  html[dir="rtl"] .lang-buttons {
+    right: auto;
+    left: 20px;
+  }
+  .lang-btn {
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background-color: #7B5E57;
+    color: #fff;
+    font-size: 1em;
+    transition: background 0.3s;
+  }
+  .lang-btn:hover {
+    background-color: #5a463f;
+  }
+  .lang-btn.active {
+    background-color: #3d2f2a;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+</style>
+</head>
+<body>
 
+<div class="lang-buttons" role="toolbar" aria-label="Language selection">
+  <button class="lang-btn active" onclick="changeLang('en')" aria-label="English">English</button>
+  <button class="lang-btn" onclick="changeLang('ar')" aria-label="Arabic">العربية</button>
+  <button class="lang-btn" onclick="changeLang('fr')" aria-label="French">Français</button>
+</div>
+
+<h1 id="title">Welcome to our Store</h1>
+<p id="subtitle">Click below to visit our Instagram</p>
+
+<div class="buttons">
+  <a class="btn" href="https://www.instagram.com/rilana__collection?igsh=c3kycmxrczl4M3Zt" target="_blank" rel="noopener noreferrer">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="24" height="24">
+    <span id="btn-text">Visit Instagram</span>
+  </a>
+</div>
+
+<audio autoplay loop id="bgAudio">
+  <source src="Lala_Boy.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+const texts = {
+  en: {
+    title: "Welcome to our Store",
+    subtitle: "Click below to visit our Instagram",
+    btn: "Visit Instagram",
+    dir: "ltr"
+  },
+  ar: {
+    title: "مرحبا بك في متجرنا",
+    subtitle: "انقر أدناه لزيارة حسابنا على إنستغرام",
+    btn: "زيارة إنستغرام",
+    dir: "rtl"
+  },
+  fr: {
+    title: "Bienvenue dans notre boutique",
+    subtitle: "Cliquez ci-dessous pour visiter notre Instagram",
+    btn: "Visiter Instagram",
+    dir: "ltr"
+  }
+};
+
+function changeLang(lang) {
+  if (!texts[lang]) {
+    console.warn(`Language "${lang}" not found`);
+    return;
+  }
+  
+  document.documentElement.lang = lang;
+  document.documentElement.dir = texts[lang].dir;
+  document.getElementById('title').innerText = texts[lang].title;
+  document.getElementById('subtitle').innerText = texts[lang].subtitle;
+  document.getElementById('btn-text').innerText = texts[lang].btn;
+  
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
+```
