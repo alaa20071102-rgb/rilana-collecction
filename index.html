@@ -1,126 +1,247 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rilana Collection</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --main: #7B5E57; --accent: #A67C52; --bg: #F5F0E6; --text: #444; }
-        body { margin: 0; font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--text); padding-bottom: 80px; scroll-behavior: smooth; }
-        header { background: #fff; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
-        h1 { font-family: 'Playfair Display', serif; color: var(--main); margin: 0; font-size: 1.8rem; }
-        .lang-switcher { font-size: 0.7rem; margin-bottom: 10px; color: var(--accent); }
-        
-        .hero { padding: 40px 20px; text-align: center; background: #fff; }
-        .hero-btns { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
-        .btn-main { padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; border: 2px solid var(--main); }
-        .shop-now { background: var(--main); color: #fff; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Store Landing Page</title>
+<style>
+  /* ===================== Reset & Global ===================== */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Georgia, serif; background-color: #F5F0E6; color: #7B5E57; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+  button { cursor: pointer; }
 
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; padding: 20px; max-width: 1200px; margin: auto; }
-        .card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-        .card img { width: 100%; height: 400px; object-fit: cover; }
-        .details { padding: 20px; text-align: right; }
-        .price { color: var(--accent); font-size: 1.6rem; font-weight: bold; display: block; }
-        .info-text { font-size: 0.85rem; color: #666; line-height: 1.6; margin: 10px 0; }
-        .add-btn { background: var(--main); color: #fff; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+  /* ===================== Header ===================== */
+  header { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
+  .lang-select { font-size: 16px; padding: 5px; border-radius: 5px; border: 1px solid #7B5E57; }
+  .buttons-header button { margin-left: 10px; padding: 10px 20px; border-radius: 10px; background: #7B5E57; color: #F5F0E6; border: none; transition: 0.3s; }
+  .buttons-header button:hover { background: #5a443d; transform: scale(1.05); }
 
-        .cart-footer { position: fixed; bottom: 0; width: 100%; background: #fff; padding: 15px 0; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); z-index: 1000; }
-        .order-btn { background: var(--accent); color: #fff; padding: 12px 30px; border-radius: 12px; text-decoration: none; font-weight: bold; }
+  /* ===================== Products List ===================== */
+  .products { display: flex; flex-direction: column; gap: 40px; padding: 20px; }
+  .product { background: #fff5ee; border-radius: 15px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s; }
+  .product img { width: 100%; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+  .product img:hover { transform: scale(1.02); }
+  .product-info { margin-top: 10px; }
+  .product-info h2 { font-size: 24px; margin-bottom: 5px; }
+  .product-info .price { font-weight: bold; font-size: 20px; margin-bottom: 10px; }
 
-        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-box { background: #fff; padding: 30px; border-radius: 25px; width: 90%; max-width: 400px; text-align: center; box-sizing: border-box; }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
-    </style>
+  /* ===================== Expanded Details ===================== */
+  .details { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; animation: fadeIn 0.5s; }
+  .details label { display: block; margin: 8px 0 4px; font-weight: bold; }
+  .details input[type="text"], .details select { padding: 5px; width: 100%; border-radius: 5px; border: 1px solid #7B5E57; }
+  .color-options { display: flex; gap: 10px; margin-bottom: 10px; }
+  .color-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #7B5E57; cursor: pointer; transition: 0.3s; }
+  .color-btn:hover { transform: scale(1.1); }
+
+  .quantity { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
+  .quantity button { padding: 5px 10px; border: none; background: #7B5E57; color: #F5F0E6; border-radius: 5px; transition: 0.3s; }
+  .quantity button:hover { background: #5a443d; }
+
+  .add-cart { background: #7B5E57; color: #F5F0E6; border: none; padding: 10px 20px; border-radius: 10px; transition: 0.3s; }
+  .add-cart:hover { background: #5a443d; transform: scale(1.05); }
+
+  /* ===================== Cart Sidebar ===================== */
+  .cart-icon { position: fixed; bottom: 20px; right: 20px; background: #00a86b; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 1000; }
+  .cart-sidebar { position: fixed; right: -400px; top: 0; width: 400px; height: 100%; background: #F5F0E6; box-shadow: -5px 0 15px rgba(0,0,0,0.2); transition: 0.5s; padding: 20px; overflow-y: auto; z-index: 999; }
+  .cart-sidebar.active { right: 0; }
+  .cart-sidebar h2 { margin-bottom: 20px; font-size: 24px; }
+  .cart-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
+  .cart-item p { margin: 3px 0; }
+  .total { font-weight: bold; margin-top: 15px; font-size: 18px; }
+
+  /* ===================== Animations ===================== */
+  @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+  /* ===================== Responsive ===================== */
+  @media(max-width: 768px){
+    .cart-sidebar { width: 80%; }
+  }
+</style>
 </head>
 <body>
 
 <header>
-    <div class="lang-switcher">AR | EN | FR</div>
-    <h1>Rilana Collection</h1>
+  <select class="lang-select" id="language">
+<option value="fr">Français</option>
+    <option value="ar">العربية</option>
+    <option value="en">English</option>
+  </select>
+  <div class="buttons-header">
+    <button id="shopBtn">Shop Now</button>
+    <button onclick="window.open('https://www.instagram.com/rilana__collection?igsh=c3kycmxrczl4M3Zt','_blank')">Visit Instagram</button>
+  </div>
 </header>
 
-<div class="hero">
-    <p>أناقتكِ هي أولويتنا ✨</p>
-    <div class="hero-btns">
-        <a href="#shop" class="btn-main shop-now">تسوقي الآن</a>
-        <a href="https://www.instagram.com/rilana___collection" target="_blank" class="btn-main">إنستغرام</a>
+<div class="products" id="products">
+
+  <!-- ====== Example Product ====== -->
+  <div class="product" data-name="Yaqout Dress" data-price="3700" data-colors="gris,bordeaux,vert,bleu" data-sizes="XS,S,M,L,XL,XXL">
+    <img src="https://i.ibb.co/1GVHY6LL" alt="Yaqout Dress" class="product-img">
+    <div class="product-info">
+      <h2>Yaqout Dress</h2>
+      <p class="price">3700 DZD</p>
     </div>
+    <div class="details">
+      <label id="colorLabel">Color / اللون / Couleur:</label>
+      <div class="color-options">
+        <div class="color-btn" style="background:#d3d3d3;" data-color="gris"></div>
+        <div class="color-btn" style="background:#800020;" data-color="bordeaux"></div>
+        <div class="color-btn" style="background:#008000;" data-color="vert"></div>
+        <div class="color-btn" style="background:#0000ff;" data-color="bleu"></div>
+      </div>
+      <label>Size / المقاس / Taille:</label>
+      <select class="size-select">
+        <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+      </select>
+      <label>Height / الطول / Taille:</label>
+      <input type="text" class="height-input" placeholder="1.50 - 1.75">
+      <label>Quantity / الكمية / Quantité:</label>
+      <div class="quantity">
+        <button class="minus">-</button>
+        <input type="text" value="1" class="qty" style="width:40px; text-align:center;">
+        <button class="plus">+</button>
+      </div>
+      <label>Name / الاسم الكامل / Nom complet:</label>
+      <input type="text" class="fullname">
+      <label>Phone / رقم الهاتف / Téléphone:</label>
+      <input type="text" class="phone">
+      <label>Wilaya / الولاية / Wilaya:</label>
+      <select class="wilaya-select">
+        <option value="">Select / اختر / Sélectionner</option>
+        <option value="Adrar">Adrar</option>
+        <option value="Chlef">Chlef</option>
+        <option value="Laghouat">Laghouat</option>
+        <option value="Oum El Bouaghi">Oum El Bouaghi</option>
+        <option value="Batna">Batna</option>
+        <option value="Béjaïa">Béjaïa</option>
+        <option value="Biskra">Biskra</option>
+        <option value="Béchar">Béchar</option>
+        <option value="Blida">Blida</option>
+        <option value="Bouira">Bouira</option>
+        <option value="Tamanrasset">Tamanrasset</option>
+        <option value="Tébessa">Tébessa</option>
+        <option value="Tlemcen">Tlemcen</option>
+        <option value="Tiaret">Tiaret</option>
+        <option value="Tizi Ouzou">Tizi Ouzou</option>
+        <option value="Alger">Alger</option>
+        <option value="Djelfa">Djelfa</option>
+        <option value="Jijel">Jijel</option>
+        <option value="Sétif">Sétif</option>
+        <option value="Saïda">Saïda</option>
+        <option value="Skikda">Skikda</option>
+        <option value="Sidi Bel Abbès">Sidi Bel Abbès</option>
+        <option value="Annaba">Annaba</option>
+        <option value="Guelma">Guelma</option>
+        <option value="Constantine">Constantine</option>
+        <option value="Médéa">Médéa</option>
+        <option value="Mostaganem">Mostaganem</option>
+        <option value="M'Sila">M'Sila</option>
+        <option value="Mascara">Mascara</option>
+        <option value="Ouargla">Ouargla</option>
+        <option value="Oran">Oran</option>
+        <option value="El Bayadh">El Bayadh</option>
+        <option value="Illizi">Illizi</option>
+        <option value="Bordj Bou Arreridj">Bordj Bou Arreridj</option>
+<option value="Boumerdès">Boumerdès</option>
+        <option value="El Tarf">El Tarf</option>
+        <option value="Tindouf">Tindouf</option>
+        <option value="Tissemsilt">Tissemsilt</option>
+        <option value="El Oued">El Oued</option>
+        <option value="Khenchela">Khenchela</option>
+        <option value="Souk Ahras">Souk Ahras</option>
+        <option value="Tipaza">Tipaza</option>
+        <option value="Mila">Mila</option>
+        <option value="Aïn Defla">Aïn Defla</option>
+        <option value="Naâma">Naâma</option>
+        <option value="Aïn Témouchent">Aïn Témouchent</option>
+        <option value="Ghardaïa">Ghardaïa</option>
+        <option value="Relizane">Relizane</option>
+        <option value="Timimoun">Timimoun</option>
+        <option value="Ouled Djellal">Ouled Djellal</option>
+        <option value="Beni Abbes">Beni Abbes</option>
+        <option value="In Salah">In Salah</option>
+        <option value="Touggourt">Touggourt</option>
+        <option value="El M'Ghair">El M'Ghair</option>
+        <option value="El Meniaa">El Meniaa</option>
+      </select>
+      <button class="add-cart">Add to Cart / أضف إلى السلة / Ajouter au panier</button>
+    </div>
+  </div>
+
 </div>
 
-<div class="products-grid" id="shop">
-    <div class="card">
-        <img src="https://i.ibb.co/XZnkpywh/8247.jpg" alt="Sultana">
-        <div class="details">
-            <h3>Sultana Dress</h3>
-            <span class="price">4000 DA</span>
-            <div class="info-text">أبيض | طول 1.50-1.75 | XS-XXL</div>
-            <button class="add-btn" onclick="addToCart('Sultana Dress', 4000)">إضافة للسلة</button>
-        </div>
-    </div>
-    <div class="card">
-        <img src="https://i.ibb.co/jkTwFDvr/8243.jpg" alt="Yaqout">
-<div class="details">
-            <h3>Yaqout Dress</h3>
-            <span class="price">3700 DA</span>
-            <div class="info-text">رمادي، بورغندي، أخضر، أزرق | XS-XXL</div>
-            <button class="add-btn" onclick="addToCart('Yaqout Dress', 3700)">إضافة للسلة</button>
-        </div>
-    </div>
-    <div class="card">
-        <img src="https://i.ibb.co/BFd2hbr/8245.jpg" alt="Comfort">
-        <div class="details">
-            <h3>Comfort Fit</h3>
-            <span class="price">3900 DA</span>
-            <div class="info-text">بني، أسود، رمادي غامق | XS-XXL</div>
-            <button class="add-btn" onclick="addToCart('Comfort Fit', 3900)">إضافة للسلة</button>
-        </div>
-    </div>
+<!-- Cart Sidebar -->
+<div class="cart-sidebar" id="cartSidebar">
+  <h2>Shopping Cart / سلة المشتريات / Panier</h2>
+  <div id="cartItems"></div>
+  <p class="total" id="cartTotal">Total Price / السعر الإجمالي / Prix total: 0 DZD</p>
 </div>
 
-<div class="cart-footer">
-    <div>🛒 السلة: <span id="count">0</span></div>
-    <a href="javascript:void(0)" class="order-btn" onclick="openModal()">إتمام الطلب</a>
-</div>
-
-<div id="modal">
-    <div class="modal-box">
-        <h3>تأكيد الطلبية</h3>
-        <p>المجموع: <span id="total">0</span> DA</p>
-        <input type="text" id="name" placeholder="الاسم الكامل">
-        <input type="tel" id="phone" placeholder="رقم الهاتف">
-        <select id="wilaya">
-            <option disabled selected>اختر الولاية</option>
-            <option>الجزائر</option><option>بومرداس</option><option>وهران</option>
-        </select>
-        <button class="add-btn" onclick="finishOrder()">إرسال الطلب عبر واتساب</button>
-        <button onclick="closeModal()" style="background:none; border:none; color:red; margin-top:10px; cursor:pointer;">إلغاء</button>
-    </div>
-</div>
+<!-- Cart Icon -->
+<div class="cart-icon" id="cartIcon">🛒</div>
 
 <script>
-    let cart = [];
-    function addToCart(p, s) { 
-        cart.push({name: p, price: s}); 
-        document.getElementById('count').innerText = cart.length;
-        alert("تمت إضافة " + p);
-    }
-    function openModal() {
-        if(cart.length === 0) return alert("السلة فارغة");
-        let t = cart.reduce((a, b) => a + b.price, 0);
-        document.getElementById('total').innerText = t;
-        document.getElementById('modal').style.display = 'flex';
-    }
-    function closeModal() { document.getElementById('modal').style.display = 'none'; }
-    function finishOrder() {
-        let n = document.getElementById('name').value;
-        let p = document.getElementById('phone').value;
-        let w = document.getElementById('wilaya').value;
-        if(!n  !p  !w) return alert("أكمل البيانات");
-        let msg = طلب جديد:%0Aالاسم: ${n}%0Aالهاتف: ${p}%0Aالولاية: ${w}%0Aالمنتجات:;
-        cart.forEach(i => msg += %0A- ${i.name} (${i.price} DA));
-        window.open(https://wa.me/213794042520?text=${msg});
-    }
-</script>
-</body>
-</html>
+  const products = document.querySelectorAll('.product');
+  const cartIcon = document.getElementById('cartIcon');
+  const cartSidebar = document.getElementById('cartSidebar');
+  const cartItemsContainer = document.getElementById('cartItems');
+  const cartTotal = document.getElementById('cartTotal');
+
+  let cart = [];
+
+  // Delivery prices by Wilaya
+  const deliveryPrices = {
+    "Adrar": {home:1100, office:600}, "Chlef": {home:700, office:400}, "Laghouat": {home:900, office:500},
+    "Oum El Bouaghi": {home:800, office:400}, "Batna": {home:900, office:400}, "Béjaïa": {home:600, office:400},
+    "Biskra": {home:900, office:500}, "Béchar": {home:1300, office:600}, "Blida": {home:500, office:250},
+    "Bouira": {home:600, office:400}, "Tamanrasset": {home:1300, office:600}, "Tébessa": {home:900, office:400},
+    "Tlemcen": {home:800, office:400}, "Tiaret": {home:700, office:400}, "Tizi Ouzou": {home:600, office:400},
+    "Alger": {home:500, office:350}, "Djelfa": {home:900, office:500}, "Jijel": {home:700, office:400},
+    "Sétif": {home:700, office:400}, "Saïda": {home:800, office:400}, "Skikda": {home:700, office:400},
+    "Sidi Bel Abbès": {home:700, office:400}, "Annaba": {home:700, office:400}, "Guelma": {home:800, office:400},
+    "Constantine": {home:700, office:400}, "Médéa": {home:600, office:400}, "Mostaganem": {home:700, office:400},
+    "M'Sila": {home:800, office:500}, "Mascara": {home:700, office:400}, "Ouargla": {home:1000, office:500},
+    "Oran": {home:700, office:400}, "El Bayadh": {home:1000, office:500}, "Illizi": {home:1300, office:600},
+    "Bordj Bou Arreridj": {home:700, office:400}, "Boumerdès": {home:450, office:250}, "El Tarf": {home:800, office:400},
+    "Tindouf": {home:1300, office:600}, "Tissemsilt": {home:700, office:400}, "El Oued": {home:1000, office:500},
+    "Khenchela": {home:900, office:500}, "Souk Ahras": {home:900, office:500}, "Tipaza": {home:700, office:400},
+    "Mila": {home:700, office:400}, "Aïn Defla": {home:700, office:400}, "Naâma": {home:1000, office:500},
+    "Aïn Témouchent": {home:700, office:400}, "Ghardaïa": {home:1000, office:500}, "Relizane": {home:700, office:400},
+    "Timimoun": {home:1300, office:600}, "Ouled Djellal": {home:900, office:500}, "Beni Abbes": {home:1300, office:0},
+    "In Salah": {home:1300, office:600}, "Touggourt": {home:900, office:0}, "El M'Ghair": {home:900, office:0},
+    "El Meniaa": {home:1000, office:500}
+  };
+// Toggle details
+  products.forEach(p => {
+    const img = p.querySelector('.product-img');
+    const details = p.querySelector('.details');
+    img.addEventListener('click', () => { details.style.display = details.style.display === 'block' ? 'none' : 'block'; });
+
+    // Quantity buttons
+    const minus = details.querySelector('.minus');
+    const plus = details.querySelector('.plus');
+    const qtyInput = details.querySelector('.qty');
+
+    minus.addEventListener('click', () => {
+      let val = parseInt(qtyInput.value); if(val>1){ qtyInput.value = val-1; }
+    });
+    plus.addEventListener('click', () => {
+      let val = parseInt(qtyInput.value); if(val<10){ qtyInput.value = val+1; }
+    });
+
+    // Color buttons
+    const colorBtns = details.querySelectorAll('.color-btn');
+    colorBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const color = btn.dataset.color;
+        // Optional: Change image source according to color if available
+        // Here just placeholder logic
+        img.src = img.src; // Replace with actual logic if separate images exist
+      });
+    });
+
+    // Add to cart
+    const addBtn = details.querySelector('.add-cart');
+    addBtn.addEventListener('click', () => {
+      const name = p.dataset
