@@ -1,332 +1,149 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rilana Store</title>
-<style>
-/* تصميم أساسي */
-body {
-  margin:0;
-  font-family: Georgia, serif;
-  background-color:#F5F0E6;
-  color:#7B5E57;
-  overflow-x:hidden;
-}
-
-h1,h2{ text-align:center; }
-
-header{
-  text-align:center;
-  padding:20px;
-}
-
-.language-select{
-  text-align:center;
-  margin-bottom:10px;
-}
-
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
-  padding:20px;
-}
-
-.product{
-  background:#fff;
-  border-radius:12px;
-  padding:10px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.1);
-  transition:transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product:hover{
-  transform:translateY(-5px);
-  box-shadow:0 10px 20px rgba(0,0,0,0.2);
-}
-
-.product img{
-  width:100%;
-  border-radius:10px;
-  transition:opacity 0.5s ease;
-}
-
-.colors span{
-  display:inline-block;
-  width:25px;height:25px;
-  border-radius:50%;
-  margin:5px;
-  cursor:pointer;
-  border:2px solid #7B5E57;
-  transition:transform 0.3s ease;
-}
-
-.colors span:hover{ transform:scale(1.2); }
-
-select,input{
-  width:100%;
-  padding:6px;
-  margin:5px 0;
-  border-radius:5px;
-  border:1px solid #ccc;
-}
-
-button{
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  background:#7B5E57;
-  color:#fff;
-  cursor:pointer;
-  margin-top:5px;
-  transition:background 0.3s ease, transform 0.2s ease;
-}
-
-button:hover{
-  background:#5a453f;
-  transform:scale(1.05);
-}
-
-/* سلة */
-.cart-btn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#00a86b;
-  color:#fff;
-  font-size:24px;
-  padding:15px;
-  border-radius:50%;
-  cursor:pointer;
-  z-index:1000;
-}
-
-.cart{
-  position:fixed;
-  top:0;
-  right:-100%;
-  width:350px;
-  height:100%;
-  background:#fff;
-  box-shadow:-4px 0 12px rgba(0,0,0,0.2);
-  padding:20px;
-  overflow:auto;
-  transition:0.3s;
-  z-index:999;
-}
-
-.cart.active{ right:0; }
-
-.cart h3{text-align:center;margin-bottom:10px;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rilana Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --main: #7B5E57; --bg: #F5F0E6; }
+        body { margin: 0; font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--main); }
+        header { text-align: center; padding: 40px 20px; background: #fff; border-bottom: 2px solid var(--main); }
+        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; padding: 20px; }
+        .product { background: #fff; border-radius: 15px; padding: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; }
+        /* جعل الصورة واضحة وكبيرة */
+        .product img { width: 100%; height: auto; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        .product img:hover { transform: scale(1.02); }
+        .price { font-size: 1.5rem; font-weight: bold; margin: 10px 0; color: #A67C52; }
+        .colors { margin: 10px 0; }
+        .colors span { display: inline-block; width: 25px; height: 25px; border-radius: 50%; margin: 5px; cursor: pointer; border: 2px solid #ddd; }
+        select, input { width: 100%; padding: 10px; margin: 5px 0; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
+        .btn { background: var(--main); color: #fff; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        
+        /* السلة */
+        .cart-toggle { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 15px; border-radius: 50%; font-size: 24px; cursor: pointer; z-index: 100; }
+        .cart-panel { position: fixed; top: 0; left: -100%; width: 320px; height: 100%; background: #fff; z-index: 200; transition: 0.4s; padding: 20px; box-shadow: 5px 0 15px rgba(0,0,0,0.2); overflow-y: auto; }
+        .cart-panel.active { left: 0; }
+    </style>
 </head>
-
 <body>
 
 <header>
-  <h1>Rilana Store</h1>
-  <div class="language-select">
-    <label for="lang">اختار اللغة / Choisir la langue / Choose Language: </label>
-    <select id="lang">
-      <option value="ar">العربية</option>
-      <option value="fr" selected>Français</option>
-      <option value="en">English</option>
-    </select>
-  </div>
-  <button onclick="scrollToProducts()">Shop Now / تسوق الآن</button>
-  <button onclick="window.open('https://www.instagram.com/rilana__collection?igsh=c3kycmxrczl4M3Zt','_blank')">Visit Our Instagram</button>
+    <h1>Rilana Collection</h1>
+    <p>أزياء راقية لكل المناسبات</p>
 </header>
 
-<div class="products" id="products"></div>
+<div class="products" id="productList"></div>
 
-<div class="cart-btn" onclick="toggleCart()">🛍️</div>
+<div class="cart-toggle" onclick="toggleCart()">🛍️</div>
 
-<div class="cart" id="cart">
-<h3>السلة</h3>
-<div id="cartItems"></div>
-<p id="total"></p>
-
-<select id="wilaya">
-  <option value="0">اختر الولاية</option>
-  <option value="1100">أدرار</option>
-  <option value="700">الشلف</option>
-  <option value="900">الأغواط</option>
-  <option value="800">أم البواقي</option>
-  <option value="900">باتنة</option>
-  <option value="600">بجاية</option>
-  <option value="900">بسكرة</option>
-  <option value="1300">بشار</option>
-  <option value="500">البليدة</option>
-  <option value="600">البويرة</option>
-  <option value="1300">تمنراست</option>
-  <option value="900">تبسة</option>
-  <option value="800">تلمسان</option>
-  <option value="700">تيارت</option>
-  <option value="600">تيزي وزو</option>
-  <option value="500">الجزائر العاصمة</option>
-  <option value="900">الجلفة</option>
-  <option value="700">جيجل</option>
-  <option value="700">سطيف</option>
-  <option value="800">سعيدة</option>
-  <option value="700">سكيكدة</option>
-  <option value="700">سيدي بلعباس</option>
-  <option value="700">عنابة</option>
-  <option value="800">قالمة</option>
-  <option value="700">قسنطينة</option>
-  <option value="600">المدية</option>
-<option value="700">مستغانم</option>
-  <option value="800">المسيلة</option>
-  <option value="700">معسكر</option>
-  <option value="1000">ورقلة</option>
-  <option value="700">وهران</option>
-  <option value="1000">البيض</option>
-  <option value="1300">إيليزي</option>
-  <option value="700">برج بوعريريج</option>
-  <option value="450">بومرداس</option>
-  <option value="800">الطارف</option>
-  <option value="1300">تندوف</option>
-  <option value="700">تسمسيلت</option>
-  <option value="1000">الوادي</option>
-  <option value="900">خنشلة</option>
-  <option value="900">سوق أهراس</option>
-  <option value="700">تيبازة</option>
-  <option value="700">ميلة</option>
-  <option value="700">عين الدفلى</option>
-  <option value="1000">النعامة</option>
-  <option value="700">عين تموشنت</option>
-  <option value="1000">غرداية</option>
-  <option value="700">غليزان</option>
-  <option value="1300">تيميمون</option>
-  <option value="900">أولاد جلال</option>
-  <option value="1300">بني عباس</option>
-  <option value="1300">عين صالح</option>
-  <option value="900">توقرت</option>
-  <option value="900">المغير</option>
-  <option value="1000">المنيعة</option>
-</select>
-
-<select id="deliveryType">
-<option value="0">نوع التوصيل</option>
-<option value="0">مكتب</option>
-<option value="300">منزل (+300دج)</option>
-</select>
-
-<button onclick="sendOrder()">تأكيد الطلب</button>
+<div class="cart-panel" id="cartPanel">
+    <button onclick="toggleCart()" style="color:red; background:none; border:none; cursor:pointer;">إغلاق X</button>
+    <h3>طلباتك</h3>
+    <div id="cartItems"></div>
+    <hr>
+    <p id="totalPrice" style="font-weight:bold;"></p>
+    
+    <label>اختر الولاية:</label>
+    <select id="wilaya">
+        <option value="450">بومرداس (450 دج)</option>
+        <option value="500">الجزائر (500 دج)</option>
+        <option value="600">البويرة / تيزي وزو (600 دج)</option>
+        <option value="700">سطيف / وهران / قسنطينة (700 دج)</option>
+        <option value="900">باتنة / بسكرة (900 دج)</option>
+    </select>
+    
+    <button class="btn" onclick="sendOrder()">إرسال الطلب عبر واتساب</button>
 </div>
 
 <script>
-let langSelect = document.getElementById("lang");
-let currentLang = langSelect.value;
-langSelect.addEventListener("change",()=>{currentLang=langSelect.value;});
-
-let products=[
-{
-name:"Yaqout Dress",price:3700,
-colors:[
-{name:"Bordeaux",c:"#800020",img:"https://i.ibb.co/jkTwFDvr"},
-{name:"Green",c:"green",img:"https://i.ibb.co/Hp75Bxhr"},
-{name:"Blue",c:"blue",img:"https://i.ibb.co/PsPKcQRc"}
-]
-},
-{
-name:"Sultana Dress",price:4000,
-colors:[
-{name:"White",c:"white",img:"https://i.ibb.co/XZnkpywh"}
-]
-},
-{
-name:"Comfort Fit",price:3900,
-colors:[
-{name:"Brown",c:"brown",img:"https://i.ibb.co/BFd2hbr"},
-{name:"Black",c:"black",img:"https://i.ibb.co/8g09tL7t"},
-{name:"Dark Gray",c:"gray",img:"https://i.ibb.co/DfPp0VdZ"}
-]
-},
-{
-name:"Aurora Top",price:3100,
-colors:[
-{name:"Bordeaux",c:"#800020",img:"https://i.ibb.co/RGgq1GTS"},
-{name:"White",c:"white",img:"https://i.ibb.co/cc1Mnbzw"},
-{name:"Brown",c:"brown",img:"https://i.ibb.co/YByFCt4t"}
-]
-},
-{
-name:"Bella Top",price:3000,
-colors:[
-{name:"Brown",c:"brown",img:"https://i.ibb.co/DP4fxQbh"},
-{name:"Beige",c:"beige",img:"https://i.ibb.co/Xk5K3zm7"},
-{name:"Black",c:"black",img:"https://i.ibb.co/NG8YF6Z"},
-{name:"White",c:"white",img:"https://i.ibb.co/x8CDd3dY"},
-{name:"Bordeaux",c:"#800020",img:"https://i.ibb.co/XgCqdk0"}
-]
-}
+const products = [
+    { name: "Yaqout Dress", price: 3700, colors: [
+        { name: "خمار مارون", hex: "#800020", img: "https://i.ibb.co/jkTwFDvr/8243.jpg" },
+        { name: "أخضر", hex: "green", img: "https://i.ibb.co/Hp75Bxhr/8244.jpg" },
+        { name: "أزرق", hex: "blue", img: "https://i.ibb.co/PsPKcQRc/8245.jpg" }
+    ]},
+    { name: "Sultana Dress", price: 4000, colors: [
+        { name: "أبيض", hex: "#fff", img: "https://i.ibb.co/XZnkpywh/8247.jpg" }
+    ]},
+    { name: "Comfort Fit", price: 3900, colors: [
+        { name: "بني", hex: "brown", img: "https://i.ibb.co/BFd2hbr/8241.jpg" },
+        { name: "أسود", hex: "black", img: "https://i.ibb.co/8g09tL7t/8242.jpg" }
+    ]},
+    { name: "Aurora Top", price: 3100, colors: [
+        { name: "مارون", hex: "#800020", img: "https://i.ibb.co/RGgq1GTS/8246.jpg" },
+        { name: "أبيض", hex: "#fff", img: "https://i.ibb.co/cc1Mnbzw/8248.jpg" }
+    ]},
+    { name: "Bella Top", price: 3000, colors: [
+        { name: "بيج", hex: "#F5F5DC", img: "https://i.ibb.co/Xk5K3zm7/8249.jpg" },
+        { name: "أسود", hex: "black", img: "https://i.ibb.co/NG8YF6Z/8250.jpg" }
+    ]}
 ];
 
-let cart=[];
-let selectedColors={};
+let cart = [];
+let selectedVariants = {};
 
-function renderProducts(){
-let html="";
-products.forEach((p,i)=>{
-html+=<div class="product">
-<img id="img${i}" src="${p.colors[0].img}">
-<h3>${p.name}</h3>
-<p>${p.price} DA</p>
-<div class="colors">
-${p.colors.map(c=><span style="background:${c.c}" onclick="changeColor(${i},'${c.img}','${c.name}')"></span>).join("")}
-</div>
-<select id="size${i}">
-<option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
-</select>
-<input id="height${i}" placeholder="1.50 - 1.75">
-<input id="qty${i}" type="number" value="1" min="1" max="10">
-<button onclick="addToCart(${i})">Ajouter</button>
-</div>;
-});
-document.getElementById("products").innerHTML=html;
+function init() {
+    let html = "";
+    products.forEach((p, i) => {
+        selectedVariants[i] = p.colors[0];
+        html += `
+        <div class="product">
+            <img id="img${i}" src="${p.colors[0].img}" onclick="window.open(this.src)">
+            <h3>${p.name}</h3>
+            <div class="price">${p.price} DA</div>
+            <div class="colors">
+                ${p.colors.map(c => `<span style="background:${c.hex}" onclick="updateVariant(${i}, '${c.img}', '${c.name}')"></span>`).join("")}
+            </div>
+            <select id="size${i}"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+            <input type="text" id="h${i}" placeholder="الطول (مثال 1.60)">
+            <button class="btn" onclick="addToCart(${i})">إضافة للسلة</button>
+        </div>`;
+    });
+    document.getElementById("productList").innerHTML = html;
 }
 
-function changeColor(i,img,name){document.getElementById("img"+i).src=img; selectedColors[i]=name;}
-
-function addToCart(i){
-let p=products[i];
-let qty=parseInt(document.getElementById("qty"+i).value);
-let size=document.getElementById("size"+i).value;
-let height=document.getElementById("height"+i).value;
-cart.push({name:p.name,price:p.price,qty:qty,size:size,height:height,color:selectedColors[i]||p.colors[0].name});
-renderCart();
-}
-function renderCart(){
-let html="";
-let total=0;
-cart.forEach(item=>{
-total+=item.price*item.qty;
-html+=<p>${item.name} x${item.qty}<br>${item.color} / ${item.size} / ${item.height}</p>;
-});
-document.getElementById("cartItems").innerHTML=html;
-document.getElementById("total").innerText="المجموع: "+total+" دج";
+function updateVariant(i, img, name) {
+    document.getElementById("img" + i).src = img;
+    selectedVariants[i] = { name: name, img: img };
 }
 
-function toggleCart(){document.getElementById("cart").classList.toggle("active");}
-
-function sendOrder(){
-let wilaya=parseInt(document.getElementById("wilaya").value);
-let delivery=parseInt(document.getElementById("deliveryType").value);
-let total=0;
-let message="طلب جديد:\n\n";
-cart.forEach(item=>{total+=item.price*item.qty; message+=${item.name} x${item.qty}\n${item.color} / ${item.size} / ${item.height}\n\n;});
-message+=المجموع: ${total} دج\n;
-message+=التوصيل: ${wilaya+delivery} دج\n;
-message+=الإجمالي: ${total+wilaya+delivery} دج;
-window.open("https://wa.me/213794042520?text="+encodeURIComponent(message),"_blank");
+function addToCart(i) {
+    let size = document.getElementById("size" + i).value;
+    let height = document.getElementById("h" + i).value;
+    if(!height) return alert("يرجى كتابة الطول");
+    
+    cart.push({ ...products[i], color: selectedVariants[i].name, size, height });
+    alert("تمت الإضافة!");
+    renderCart();
 }
 
-function scrollToProducts(){document.getElementById("products").scrollIntoView({behavior:"smooth"});}
+function renderCart() {
+    let html = ""; let total = 0;
+    cart.forEach(item => {
+        total += item.price;
+        html += `<p style="font-size:0.9rem;">- ${item.name} (${item.color}) / ${item.size} / ${item.height}m</p>`;
+    });
+    document.getElementById("cartItems").innerHTML = html;
+    document.getElementById("totalPrice").innerText = "المجموع: " + total + " DA";
+}
 
-renderProducts();
+function toggleCart() { document.getElementById("cartPanel").classList.toggle("active"); }
+
+function sendOrder() {
+    if(cart.length === 0) return alert("السلة فارغة");
+    let delivery = parseInt(document.getElementById("wilaya").value);
+    let total = 0;
+    let text = "طلب جديد من Rilana Store:%0A%0A";
+    cart.forEach(item => {
+        total += item.price;
+        text += `• ${item.name} (${item.color})%0A  المقاس: ${item.size} | الطول: ${item.height}%0A%0A`;
+    });
+    text += `الإجمالي مع التوصيل: ${total + delivery} DA`;
+    window.open(`https://wa.me/213794042520?text=${text}`);
+}
+
+init();
 </script>
-
 </body>
 </html>
